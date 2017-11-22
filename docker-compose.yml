@@ -1,0 +1,24 @@
+version: '3'
+
+services: 
+  playground:
+    build:
+      context: ./
+      dockerfile: ./build/Dockerfile
+    volumes:
+      - "./:/opt/playground"
+      - "./build/scripts:/opt/playground/scripts"
+      - "./build/configs:/opt/playground/configs"
+    ports:
+      - "8080:80"
+    depends_on:
+      - pgsql
+
+  pgsql:
+    image: postgres:9.6.1
+    environment:
+      - POSTGRES_DB=playground
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - "6432:5432"

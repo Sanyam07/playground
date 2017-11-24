@@ -5,6 +5,7 @@ RUN \
     apt-get install -y supervisor nginx ca-certificates && \
     python3.6 -m pip install uwsgi
 
+COPY ./manage.py /opt/playground/manage.py
 COPY ./playground /opt/playground/playground
 COPY ./requirements /opt/playground/requirements
 COPY ./build/configs /opt/playground/configs/
@@ -18,6 +19,8 @@ RUN \
 
 RUN \
     python3.6 -m pip install -r /opt/playground/requirements/requirements.txt
+
+COPY ./static /opt/playground/static
 
 EXPOSE 80
 

@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'playground.joystick'
 ]
 
 MIDDLEWARE = [
@@ -74,9 +74,13 @@ WSGI_APPLICATION = 'playground.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'playground',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'pgsql',
+        'PORT': '5432',
     }
 }
 
@@ -117,4 +121,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+APPEND_SLASH = False

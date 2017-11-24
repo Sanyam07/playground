@@ -7,18 +7,10 @@ set -o xtrace
 set -o pipefail
 
 export DJANGO_SETTINGS_MODULE=playground.settings
-export DATABASE_HOST=${DB_HOST}
 
-export PURPOSE=$1
-export ENV=$2
+echo "/opt/playground/playground" > /usr/local/lib/python3.6/site-packages/playground.pth
+echo Migrate database schema
+python /opt/playground/manage.py migrate
 
-export DATABASE_USER=postgres
-export DATABASE_PASSWORD=postgres
-
-if [[ "$PURPOSE" == "service" ]]; then
-    echo Starting service
-    exec /usr/bin/supervisord -c /opt/playground/configs/supervisor.conf.ini
-elif [[ "$PURPOSE" == "migration" ]]; then
-    echo Migrations database schema
-    django-admin migrate
-fi
+echo Starting service
+exec /usr/bin/supervisord -c /opt/playground/configs/supervisor.conf.ini

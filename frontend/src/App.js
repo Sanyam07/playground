@@ -11,24 +11,22 @@ class App extends Component {
     let timer = setInterval(this.tick.bind(this), 100);
     let joystickManager = require('nipplejs').create({
       zone: document.getElementById('joystick'),
-      color: "red",
-      mode: "semi",
+      color: "blue",
+      mode: "static",
+      size: 200,
+      position: {top: "50%", left: "50%"}
     });
     this.setState({
       timer, 
       joystickManager
     });
-    joystickManager.on('added', (evt, joystick) => {
-      joystick.on('move', (evt, data) => {
-        let joystickData = {...data};
-        delete joystickData['instance'];
-        this.setState({joystickData});
-      });
-      joystick.on('end', (evt, joystick) => {
-        this.setState({joystickData: undefined});
-      });
-    }).on('removed', (evt, joystick) => {
-      joystick.off('start move end dir plain');
+    joystickManager.on('move', (evt, data) => {
+      let joystickData = {...data};
+      delete joystickData['instance'];
+      this.setState({joystickData});
+    });
+    joystickManager.on('end', (evt, joystick) => {
+      this.setState({joystickData: undefined});
     });
   }
   
@@ -44,7 +42,7 @@ class App extends Component {
   }
   
   render() {
-    return (<div id="joystick" style={{width: "500px", height: "500px"}}></div>);
+    return (<div id="joystick"></div>);
   }
 }
 
